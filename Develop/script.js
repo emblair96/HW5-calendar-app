@@ -1,35 +1,57 @@
 var currentDay = $("#currentDay")
 var calendarEl = $(".calendar")
 var description = $(".description")
+var textarea = $("textarea")
 descriptionArray = description.toArray()
+textareaArray = textarea.toArray()
 
 var currentIndex = 0;
-var timeArray = [9, 10, 11, 12, 13, 14, 15, 16, 23]
+var timeArray = [5, 10, 11, 12, 13, 14, 15, 16, 23]
 
 // Date in time (format: Sunday, October 25, 2020 6:39 PM)
 var hour = moment().hour()
+
+
 
 function updateDate() {
     $("#currentDay").text(moment().format("LLLL"))
     
 }
 
-function checkTime() {
-    for(i=0; i<=description.length; i++) {
-        currentDescriptionIndex = descriptionArray[i]
+$(".description").each(function(index) {
+    console.log(($(".description")[index]))
 
-        if (timeArray[i] === hour) {
-            $(".description").addClass("present")
-        }
-        else if (timeArray[i] < hour) {
-            $(".description").addClass("past")
-        }
-        else if (timeArray[i] > hour) {
-            $(".description").addClass("future")
-        }
+    if ($(this).attr("data-time") === hour) {
+        $(".description").addClass("present")
     }
+    else if ($(this).attr("data-time") < hour) {
+        $(".description").addClass("past")
+    }
+    else if ($(this).attr("data-time") > hour) {
+        $(".description").addClass("future")
+    }
+    });
+  
+
+// function checkTime() {
+//     for(i=0; i<=description.length; i++) {
+//         console.log(textareaArray[i])
+//         if (description.attr("data-time") === hour) {
+//             $(".description").addClass("present")
+//         }
+//         else if (descriptionArray[i].attr("data-time") < hour) {
+//             $(".description").addClass("past")
+//         }
+//         else if (descriptionArray[i].getAttribute("data-time") > hour) {
+//             $(".description").addClass("future")
+//         }
+//     }
    
-}
+// }
+
+
+
+
 
 // $.each(obj, function(key, value) {
 //     console.log(value);
@@ -115,5 +137,5 @@ var calendarContent = [
 
 
 updateDate();
-checkTime();
+// checkTime();
 
