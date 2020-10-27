@@ -2,15 +2,41 @@ var currentDay = $("#currentDay")
 var calendarEl = $(".calendar")
 var description = $(".description")
 var textarea = $("textarea")
+var saveBtn = $(".saveBtn")
+var calendarRows = $(".row")
 descriptionArray = description.toArray()
 textareaArray = textarea.toArray()
 
-var currentIndex = 0;
-var timeArray = [5, 10, 11, 12, 13, 14, 15, 16, 23]
+var schedule =[]
 
 // Date in time (format: Sunday, October 25, 2020 6:39 PM)
 var hour = moment().hour()
 
+function init() {
+// Get stored todos from localStorage
+    // Parsing the JSON string to an object
+    var storedData = localStorage.getItem("schedule");
+  
+    // If todos were retrieved from localStorage, update the todos array to it
+    if (storedData !== null) {
+      calendarContent = storedData;
+      console.log(storedData)
+    }
+  
+    // Render todos to the DOM
+    updateSchedule(); 
+};
+
+function updateSchedule() {
+    for (var i=0; i<calendarContent.length; i++) {
+        textareaArray.innerHTML = calendarContent[i]
+        console.log(textareaArray.innerHTML)
+        console.log(calendarContent)
+    }
+    
+    // for (var i=0; i<textareaArray.length; i++)
+    // textareaArray[i].value = calendarContent[i];
+}
 
 
 function updateDate() {
@@ -18,122 +44,146 @@ function updateDate() {
     
 }
 
-$(".description").each(function(index) {
-    console.log(($(".description")[index]))
-
-    if ($(this).attr("data-time") === hour) {
-        $(".description").addClass("present")
-    }
-    else if ($(this).attr("data-time") < hour) {
-        $(".description").addClass("past")
-    }
-    else if ($(this).attr("data-time") > hour) {
-        $(".description").addClass("future")
-    }
-    });
-  
-
-// function checkTime() {
-//     for(i=0; i<=description.length; i++) {
-//         console.log(textareaArray[i])
-//         if (description.attr("data-time") === hour) {
-//             $(".description").addClass("present")
-//         }
-//         else if (descriptionArray[i].attr("data-time") < hour) {
-//             $(".description").addClass("past")
-//         }
-//         else if (descriptionArray[i].getAttribute("data-time") > hour) {
-//             $(".description").addClass("future")
-//         }
+// function reset() {
+//     for(var i=0; i<textareaArray.length; i++) {
+//         textareaArray[i].classList.remove("past")
+//         textareaArray[i].classList.remove("future")
+//         textareaArray[i].classList.remove()
 //     }
-   
 // }
 
+function checkTime() {
+    for(var i=0; i<textareaArray.length; i++) {
+        var currentDescription = textareaArray[i]
+        if (textareaArray[i].getAttribute("data-time") < hour) {
+            currentDescription.classList.add("past")
+        }
+        else if (textareaArray[i].getAttribute("data-time") > hour) {
+            currentDescription.classList.add("future")
+        }
+
+        else {
+            currentDescription.classList.add("present")
+        }
+    }
+}
+
+function storeSched() {
+    localStorage.setItem("schedule", calendarContent);
+}
+
+calendarRows.click(function(event) {
+    var element = event.target;
+
+    if (element.matches("button") === true) {
+        var descriptionEl = element.previousElementSibling
+        var currentIndex = textareaArray.indexOf(descriptionEl)
+        textareaArray[currentIndex].innerHTML = descriptionEl.value;
+        var storeInput = descriptionEl.value;
+        calendarContent[currentIndex] = storeInput
+        console.log(calendarContent)
+
+    }
+    storeSched();
+})
+
+saveBtn.click(function() {
+
+
+})
+
+init();
+// reset();
+checkTime();
+
+/*
+When the user clicks on the save button, then the text that was inputted into the textarea/description will be saved
+    - event listener
+    - put text user inputted into an array
+When the user visits the site again, the saved text will still appear
+    - init by gettting any data stored in the array
+
+What if i do a click function on the whole row, but only if it's a button do this thing...? 
+
+Save userinput to an array based on the index of the item they clicked on...?
+*/
 
 
 
 
-// $.each(obj, function(key, value) {
-//     console.log(value);
-//   });
-    // if (hour > 15) {
-    //     $(".description").addClass("present")
-    // }
-
-
+/*
 function renderCalendar() {
-    for (var i=0; i<=calendarContent.length; i++) {
+    for (var i=0; i<9; i++) {
         var row = $("<div>")
-        calencadarEl.appendChild(row)
+        calendarEl.append(row)
         var time = $("<div>")
-        row.appendChild(time)
+        time.text(calendarContent[i].hour)
+        row.append(time)
         var content = $("<div>")
-        content.appendChild = $("<div>")
+        content.text(calendarContent[i].text)
+        row.appendChild = (content)
+        // var saveBtn = $("<button>")
 
 
     }
 }
 
+renderCalendar();
+*/
 
-
-
-
-// function compareTime() {
-//     while (calendar.firstChild) {
-
-//     }
-// }
+var calendarContent = []
+/*
 
 var calendarContent = [
     {
-        test: 9,
+        hour: "9AM",
         text: "",
+        value: 9,
     },
 
     {
-        test: 10,
+        hour: "10AM",
         text: "",
+        value: 10,
     },
     {
-        test: 11,
+        hour: "11AM",
         text: "",
+        value: 11,
     },
     {
-        test: 12,
+        hour: "12PM",
         text: "",
+        value: 12,
     },
     {
-        test: 13,
+        hour: "1PM",
         text: "",
+        value: 13,
     },
     {
-        test: 22,
+        hour: "2PM",
         text: "",
+        value: 14,
     },
     {
-        test: 24,
+        hour: "3PM",
         text: "",
+        value: 15,
     },
     {
-        test: 24,
+        hour: "4PM",
         text: "",
+        value: 16,
     },
     {
-        test: 24,
+        hour: "5PM",
         text: "",
-    },
-    {
-        test: 24,
-        text: "",
-    },
-    {
-        test: 24,
-        text: "",
-    },
-  
+        value: 17,
+    }
 
 ]
-
+*/
 
 
 updateDate();
