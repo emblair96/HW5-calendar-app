@@ -8,7 +8,7 @@ descriptionArray = description.toArray()
 textareaArray = textarea.toArray()
 
 // var schedule =["", "", "", "", "", "", "", "", "", ""]
-var calendarContent = ["", "", "", "", "", "", "", "", "", ""]
+var calendarContent = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " ",  " ",  " "]
 
 // Date in time (format: Sunday, October 25, 2020 6:39 PM)
 var hour = moment().hour()
@@ -22,17 +22,20 @@ function init() {
     if (storedData !== null) {
       calendarContent = storedData;
       console.log(storedData)
+      updateSchedule(); 
+
     }
   
     // Render todos to the DOM
-    updateSchedule(); 
+
 };
 
 function updateSchedule() {
-    for (var i=0; i<textareaArray.length; i++) {
+    for (var i=0; i<calendarContent.length; i++) {
+        if (calendarContent[i] !== "") {
         textareaArray[i].innerHTML = calendarContent[i]
     }
-    
+}
     // for (var i=0; i<textareaArray.length; i++)
     // textareaArray[i].value = calendarContent[i];
 }
