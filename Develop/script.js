@@ -7,7 +7,7 @@ var calendarRows = $(".row")
 descriptionArray = description.toArray()
 textareaArray = textarea.toArray()
 
-var schedule =[]
+var schedule =["", "", "", "", "", "", "", "", "", ""]
 
 // Date in time (format: Sunday, October 25, 2020 6:39 PM)
 var hour = moment().hour()
@@ -15,7 +15,7 @@ var hour = moment().hour()
 function init() {
 // Get stored todos from localStorage
     // Parsing the JSON string to an object
-    var storedData = localStorage.getItem("schedule");
+    var storedData = JSON.parse(localStorage.getItem("schedule"));
   
     // If todos were retrieved from localStorage, update the todos array to it
     if (storedData !== null) {
@@ -29,9 +29,7 @@ function init() {
 
 function updateSchedule() {
     for (var i=0; i<calendarContent.length; i++) {
-        textareaArray.innerHTML = calendarContent[i]
-        console.log(textareaArray.innerHTML)
-        console.log(calendarContent)
+        textareaArray[i].innerHTML = calendarContent[i]
     }
     
     // for (var i=0; i<textareaArray.length; i++)
@@ -69,7 +67,7 @@ function checkTime() {
 }
 
 function storeSched() {
-    localStorage.setItem("schedule", calendarContent);
+    localStorage.setItem("schedule", JSON.stringify(calendarContent));
 }
 
 calendarRows.click(function(event) {
@@ -78,13 +76,13 @@ calendarRows.click(function(event) {
     if (element.matches("button") === true) {
         var descriptionEl = element.previousElementSibling
         var currentIndex = textareaArray.indexOf(descriptionEl)
+        console.log(currentIndex)
         textareaArray[currentIndex].innerHTML = descriptionEl.value;
         var storeInput = descriptionEl.value;
         calendarContent[currentIndex] = storeInput
-        console.log(calendarContent)
+        storeSched();
 
     }
-    storeSched();
 })
 
 saveBtn.click(function() {
