@@ -7,7 +7,8 @@ var calendarRows = $(".row")
 descriptionArray = description.toArray()
 textareaArray = textarea.toArray()
 
-var schedule =["", "", "", "", "", "", "", "", "", ""]
+// var schedule =["", "", "", "", "", "", "", "", "", ""]
+var calendarContent = ["", "", "", "", "", "", "", "", "", ""]
 
 // Date in time (format: Sunday, October 25, 2020 6:39 PM)
 var hour = moment().hour()
@@ -129,7 +130,7 @@ function renderCalendar() {
 renderCalendar();
 */
 
-var calendarContent = []
+
 /*
 
 var calendarContent = [
