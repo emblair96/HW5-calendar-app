@@ -29,7 +29,7 @@ function init() {
 };
 
 function updateSchedule() {
-    for (var i=0; i<calendarContent.length; i++) {
+    for (var i=0; i<textareaArray.length; i++) {
         textareaArray[i].innerHTML = calendarContent[i]
     }
     
