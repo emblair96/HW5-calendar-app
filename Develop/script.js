@@ -32,7 +32,7 @@ function init() {
 
 function updateSchedule() {
     for (var i=0; i<calendarContent.length; i++) {
-        if (calendarContent[i] !== "") {
+        if (calendarContent[i] !== " ") {
         textareaArray[i].innerHTML = calendarContent[i]
     }
 }
